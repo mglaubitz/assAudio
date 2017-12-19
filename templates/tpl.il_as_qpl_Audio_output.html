@@ -5,6 +5,7 @@
 	<button id="rec" type=button onclick="onBtnRecordClicked()">Record</button>
 	<button id="pauseRes" type=button onclick="onPauseResumeClicked()" disabled>Pause</button>
 	<button id="stop" type=button onclick="onBtnStopClicked()" disabled>Stop</button>
+	<button id="discard" type=button onclick="onBtnDiscardClicked()" disabled>Discard</button>
  </div>
 <a id="downloadLink" download="mediarecorder.webm" name="mediarecorder.webm" href></a>
 <p id="data"></p>
@@ -74,6 +75,7 @@ if(getBrowser() == "Chrome"){
 var recBtn = document.querySelector('button#rec');
 var pauseResBtn = document.querySelector('button#pauseRes');
 var stopBtn = document.querySelector('button#stop');
+var discardBtn = document.querySelector('button#discard');
 
 var videoElement = document.querySelector('video');
 var dataElement = document.querySelector('#data');
@@ -207,12 +209,24 @@ function onBtnRecordClicked (){
 		recBtn.disabled = true;
 		pauseResBtn.disabled = false;
 		stopBtn.disabled = false;
+		discardBtn.disabled = false;
 	}
 }
 
 function onBtnStopClicked(){
 	mediaRecorder.stop();
 	videoElement.controls = true;
+	$("video").prop('muted', false);
+
+	recBtn.disabled = true;
+	pauseResBtn.disabled = true;
+	stopBtn.disabled = true;
+	discardBtn.disabled = false;
+}
+
+
+function onBtnDiscardClicked(){
+	videoElement.controls = false;
 	$("video").prop('muted', false);
 
 	recBtn.disabled = false;
